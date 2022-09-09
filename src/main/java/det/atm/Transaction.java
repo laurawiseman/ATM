@@ -15,11 +15,12 @@ class Transaction {
     }
 
     private @Id @GeneratedValue Long num;
-    private @Id Long id; //Account id number
-    private Type type; 
+    private @Id @GeneratedValue Long id; //Account id number
+    private Transaction.Type type; 
     private Double amount;
 
-    Transaction(Long id, Type type, Double amount) {
+    Transaction(Long num, Long id, Type type, Double amount) {
+        this.num = num;
         this.id = id;
         this.type = type;
         this.amount = amount;
