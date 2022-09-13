@@ -35,8 +35,8 @@ class LoadDatabase {
 
             transactionRepository.findAll().forEach(transaction -> log.info("Preloaded transaction: " + transaction));
 
-            accountRepository.save(new Account(0L, "Laura Wiseman", 150D, lst));
-            accountRepository.save(new Account(1L, "Nathan Villa", 200D, lst2));
+            accountRepository.save(new Account("Laura Wiseman", 150D, lst));
+            accountRepository.save(new Account("Nathan Villa", 200D, lst2));
 
             accountRepository.findAll().forEach(account -> log.info("Preloaded account: " + account));
         };

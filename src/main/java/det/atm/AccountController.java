@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.ArrayList;
+
+
 @RestController
 class AccountController {
     private final AccountRepository accountRepository;
@@ -31,9 +35,27 @@ class AccountController {
         return assembler.toModel(account);
     }
 
-    // Create a brand new account, including setting the initial balance and any initial transactions
+    // Create a brand new account, setting the initial balance to 0 with no initial transactions
+    // Assigns an id to the new account
     @PostMapping("accounts") 
-    ResponseEntity<EntityModel<Account>> newAccount(@RequestBody Account newAccount) {
+    ResponseEntity<EntityModel<Account>> newAccount(@RequestBody String name) {
+        List<Transaction> lst = new ArrayList<Transaction>();
+        Account newAccount = new Account(name, 0D, lst);
+        // Long newId = Math.round(Math.random());
+        // Long newId = 0L;
+        // accountRepository.findAll().stream() 
+        //     .forEach(account -> {
+        //         if (account.getId() == newId)
+        //             newId += 1;
+
+                
+        //         // if (id == newId) {
+        //         //     newId = Math.round(Math.random());
+
+        //         // }
+        //     });
+        // newAccount.setId(newId);
+
         EntityModel<Account> entityModel = assembler.toModel(accountRepository.save(newAccount));
 
         return ResponseEntity
@@ -43,14 +65,17 @@ class AccountController {
 
     // Update the name of an account, or create a new one if the account does not exist
     // This does not update the balance or transactions of an account
+    // if a new account is created, it is initialized to 0 balance with no transactions
     @PutMapping("/accounts/{id}")
-    ResponseEntity<?> updateAccount (@RequestBody Account newAccount, @PathVariable Long id) {
+    ResponseEntity<?> updateAccount (@RequestBody String newName, @PathVariable Long id) {
         Account updatedAccount = accountRepository.findById(id)
             .map(account -> { 
-                account.setName(newAccount.getName());
+                account.setName(newName);
                 return accountRepository.save(account);
             })
             .orElseGet(() -> {
+                List<Transaction> lst = new ArrayList<Transaction>();
+                Account newAccount = new Account(newName, 0D, lst);
                 newAccount.setId(id);
                 return accountRepository.save(newAccount);
             });

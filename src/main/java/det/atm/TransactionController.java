@@ -28,8 +28,11 @@ class TransactionController {
     }
 
     // Get single transaction item
-    @GetMapping("/transactions/{num}") // unsure abt this ??? 
-    EntityModel<Transaction> getTransaction(@PathVariable Long num) {
+    @GetMapping("accounts/{id}/transactions/{num}")
+    EntityModel<Transaction> getTransaction(@PathVariable Long num, Long id) {
+        accountRepository.findById(id)
+            .orElseThrow(() -> new AccountNotFoundException(id));
+
         Transaction transaction = transactionRepository.findById(num)
             .orElseThrow(() -> new TransactionNotFoundException(num));
 
@@ -37,8 +40,7 @@ class TransactionController {
     }
 
     // Get all transactions for a specific account
-    // should this be based off of the account id or transaction num?? i think account
-    @GetMapping("/accounts/{id}/transactions") // what would this "" be ???
+    @GetMapping("/accounts/{id}/transactions") 
     CollectionModel<EntityModel<Transaction>> getAccountTransactions(@PathVariable Long id) {
         Account account = accountRepository.findById(id)
             .orElseThrow(() -> new AccountNotFoundException(id));
@@ -54,33 +56,54 @@ class TransactionController {
 
 
     // Get all transaction items
-    @GetMapping("/transactions") 
-    CollectionModel<EntityModel<Transaction>> getAllTransactions() {
-        List<EntityModel<Transaction>> transactions = transactionRepository.findAll().stream()
-            .map(transactionAssembler::toModel)
-            .collect(Collectors.toList());
+    // Don't think this is possible, if all transactions are tied to an account
+    // @GetMapping("/transactions") 
+    // CollectionModel<EntityModel<Transaction>> getAllTransactions() {
+    //     List<EntityModel<Transaction>> transactions = transactionRepository.findAll().stream()
+    //         .map(transactionAssembler::toModel)
+    //         .collect(Collectors.toList());
         
-        return CollectionModel.of(transactions, 
-            linkTo(methodOn(TransactionController.class).getAllTransactions()).withSelfRel());
-    }
+    //     return CollectionModel.of(transactions, 
+    //         linkTo(methodOn(TransactionController.class).getAllTransactions()).withSelfRel());
+    // }
 
 
     // Add a new transaction to the transactions repository and update the corresponding account balance 
-    @PutMapping("/transactions")
-    ResponseEntity<EntityModel<Transaction>> newTransaction(@RequestBody Transaction transaction) {
+    // @PutMapping("/transactions")
+    // ResponseEntity<EntityModel<Transaction>> newTransaction(@RequestBody Transaction transaction) {
+    //     if (!(transaction.getType() instanceof Transaction.Type)) 
+    //         throw new TransactionTypeError();
+
+    //     Account account = accountRepository.findById(transaction.getId())
+    //         .orElseThrow(() -> new AccountNotFoundException(transaction.getId()));
+
+    //     account.setBalance(transaction.getType(), transaction.getAmount());
+    //     account.addTransaction(transaction);
+
+    //     Transaction newTransaction = transactionRepository.save(transaction);
+
+    //     return ResponseEntity
+    //         .created(linkTo(methodOn(TransactionController.class).getTransaction(newTransaction.getNum())).toUri())
+    //         .body(transactionAssembler.toModel(newTransaction));
+    // }
+
+    // Add a new transaction to a specific account and update the corresponding account balance
+    @PutMapping("/accounts/{id}/transactions")
+    ResponseEntity<EntityModel<Transaction>> newTransaction(@RequestBody Transaction transaction, Long id) {
         if (!(transaction.getType() instanceof Transaction.Type)) 
             throw new TransactionTypeError();
 
-        Account account = accountRepository.findById(transaction.getId())
-            .orElseThrow(() -> new AccountNotFoundException(transaction.getId()));
+        Account account = accountRepository.findById(id)
+            .orElseThrow(() -> new AccountNotFoundException(id));
 
         account.setBalance(transaction.getType(), transaction.getAmount());
         account.addTransaction(transaction);
 
+        // Is this needed? Yes, how else would we store transactions but how is this related to accountRepo transactions list
         Transaction newTransaction = transactionRepository.save(transaction);
 
         return ResponseEntity
-            .created(linkTo(methodOn(TransactionController.class).getTransaction(newTransaction.getNum())).toUri())
+            .created(linkTo(methodOn(TransactionController.class).getTransaction(newTransaction.getNum(), id)).toUri())
             .body(transactionAssembler.toModel(newTransaction));
     }
 

@@ -15,12 +15,18 @@ class Transaction {
     }
 
     private @Id @GeneratedValue Long num;
-    private @Id @GeneratedValue Long id; //Account id number
+    private Long id; //Account id number
     private Transaction.Type type; 
     private Double amount;
 
-    Transaction(Long num, Long id, Type type, Double amount) {
-        this.num = num;
+    // Transaction(Long num, Long id, Type type, Double amount) {
+    //     this.num = num;
+    //     this.id = id;
+    //     this.type = type;
+    //     this.amount = amount;
+    // }
+
+    Transaction(Long id, Type type, Double amount) {
         this.id = id;
         this.type = type;
         this.amount = amount;
