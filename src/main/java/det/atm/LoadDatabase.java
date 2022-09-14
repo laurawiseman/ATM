@@ -17,9 +17,9 @@ class LoadDatabase {
 
     @Bean 
     CommandLineRunner initDatabase(AccountRepository accountRepository, TransactionRepository transactionRepository) {
-        Transaction t1 = new Transaction(0L, 0L, Transaction.Type.DEPOSIT, 100D);
-        Transaction t2 = new Transaction(1L, 0L, Transaction.Type.DEPOSIT, 50D);
-        Transaction t3 = new Transaction(0L, 1L, Transaction.Type.DEPOSIT, 200D);
+        Transaction t1 = new Transaction(0L, Transaction.Type.DEPOSIT, 100D);
+        Transaction t2 = new Transaction(0L, Transaction.Type.DEPOSIT, 50D);
+        Transaction t3 = new Transaction(1L, Transaction.Type.DEPOSIT, 200D);
 
         List<Transaction> lst = new ArrayList<Transaction>();
         lst.add(t1);

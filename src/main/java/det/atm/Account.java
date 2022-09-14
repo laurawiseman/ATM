@@ -17,12 +17,18 @@ class Account {
 
     Account() {} 
 
-    Account(Long id, String name, Double balance, List<Transaction> transactions) { 
-        this.id = id;
+    Account(String name, Double balance, List<Transaction> transactions) {
         this.name = name;
         this.balance = balance;
         this.transactions = transactions;
     }
+
+    // Account(Long id, String name, Double balance, List<Transaction> transactions) { 
+    //     this.id = id;
+    //     this.name = name;
+    //     this.balance = balance;
+    //     this.transactions = transactions;
+    // }
 
     public Long getId() {
         return this.id;
