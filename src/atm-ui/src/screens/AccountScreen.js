@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AccountPopup from '../components/AccountPopup';
 
 const AccountScreen = ({id}) => {
     console.log(id)
@@ -9,9 +10,10 @@ const AccountScreen = ({id}) => {
 
     const name = "Laura Wiseman"; // account.getName()
     const balance = "$150.00"; // account.getBalance()
-    const transactions = [{type: "Deposit", amount: "$100.00"}, {type: "Deposit", amount: "$50.00"}]; // account.getTransactions()
+    const transactions = [{num: 1, id: 1, type: "Deposit", amount: "$100.00"}, {num: 2, id: 1, type: "Deposit", amount: "$50.00"}]; // account.getTransactions()
 
     return (
+        <React.Fragment>
         <div className='container'>
             <div className='info'>
                 <h1> {name} </h1>   
@@ -23,16 +25,21 @@ const AccountScreen = ({id}) => {
             <div className='transactions'>
                 <div>
                     <h3> Transactions </h3>
-                    {transactions.forEach((transaction) => (
+                    {transactions.map((transaction, index) => 
                         <div className='t'>
+                            <p>{transaction.num}</p>
                             <p>{transaction.type}</p>
                             <p>{transaction.amount}</p>
                         </div>
-                    ))}
+                    )}
                 </div>
                 <button className='button' onClick={() => setCreateTransaction(true)}>Create transaction</button>
             </div>
         </div>
+        {createTransaction 
+            ? <AccountPopup createItem={createTransaction} setCreateItem={setCreateTransaction} item="transaction" />
+            : null}
+        </React.Fragment>
     )
 }
 

@@ -23,7 +23,7 @@ const HomeScreen = () => {
             <AccountForm createAccount={createAccount} />
         </div>
         {createAccount 
-            ? <AccountPopup createAccount={createAccount} setCreateAccount={setCreateAccount} />
+            ? <AccountPopup createItem={createAccount} setCreateItem={setCreateAccount} item="account" />
             : null}
         </React.Fragment>
     )

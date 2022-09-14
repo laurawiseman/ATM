@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import NewAccountForm from './NewAccountForm';
+import NewTransactionForm from './NewTransactionForm';
 
 
-const AccountPopup = ({createAccount, setCreateAccount}) => {
-    console.log(createAccount)
-    
+const AccountPopup = ({createItem, setCreateItem, item}) => {
+    console.log(createItem)
+
     return (
         <Popup 
             position = "center center"
@@ -15,15 +16,20 @@ const AccountPopup = ({createAccount, setCreateAccount}) => {
             {close => (
                 <div className="account-container">
                     <button className="close" onClick={() => {
-                        setCreateAccount(false);
+                        setCreateItem(false);
                         close();
                     }}>
                         &times;
                     </button>
                     <div className="header"> 
-                        Please enter your desired account name 
+                        Please enter your desired {item} information
                     </div>
-                    <NewAccountForm />
+                    {item == "account" 
+                        ? <NewAccountForm />
+                        : item == "transaction" ? <NewTransactionForm />
+                            : null
+                    }
+                    
                 </div>
             )}
         </Popup>

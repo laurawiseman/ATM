@@ -85,6 +85,18 @@
   /* float: left; */
 }
 
+.form-tr {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-tr .text {
+  margin: 5px;
+}
+
 .form-text .button {
   margin: 5px;
 }
@@ -102,7 +114,13 @@
   height: 1em;
   /* width: 300px; */
   padding-left: none;
+  /* padding-top: none; */
   font-size: 13px;
+}
+
+.form-tr .error-message {
+  margin-top: -5px;
+  margin-bottom: 8px;
 }
 
 .form-text .button:disabled {
@@ -147,4 +165,16 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.t {
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.t p {
+  padding: 0px 10px 0px;
 }

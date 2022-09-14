@@ -3,6 +3,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import '../App.css';
+import AccountScreen from '../screens/AccountScreen';
+// import { useNavigate } from 'react-router-dom';
 // import { firebase } from '../firebase';
 
 // const db = firebase.firestore();
@@ -15,6 +17,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const AccountForm = ({createAccount}) => {
+    // let navigate = useNavigate()
 
     async function handleFormSubmit(values) {
         // db.collection('comments').add({
@@ -22,7 +25,8 @@ const AccountForm = ({createAccount}) => {
         // }).catch((error) => {
         //     console.error('Error adding to firebase: ', error);
         // });
-        console.log(values)
+        console.log(values);
+        // navigate("/account");
 
     }
 
