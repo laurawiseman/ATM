@@ -13,11 +13,11 @@ class Account {
     private @Id @GeneratedValue Long id;
     private String name;
     private Double balance;
-    private List<Transaction> transactions;
+    private List<Long> transactions; 
 
     Account() {} 
 
-    Account(String name, Double balance, List<Transaction> transactions) {
+    Account(String name, Double balance, List<Long> transactions) {
         this.name = name;
         this.balance = balance;
         this.transactions = transactions;
@@ -42,7 +42,7 @@ class Account {
         return "$" + String.format("%.2f", this.balance);
     }
 
-    public List<Transaction> getTransactions() {
+    public List<Long> getTransactions() {
         return this.transactions;
     }
 
@@ -67,7 +67,7 @@ class Account {
         }
     }
 
-    public void addTransaction(Transaction transaction) {
+    public void addTransaction(Long transaction) {
         this.transactions.add(transaction);
     }
     

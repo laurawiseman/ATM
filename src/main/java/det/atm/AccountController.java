@@ -37,24 +37,10 @@ class AccountController {
 
     // Create a brand new account, setting the initial balance to 0 with no initial transactions
     // Assigns an id to the new account
-    @PostMapping("accounts") 
+    @PostMapping("/accounts") 
     ResponseEntity<EntityModel<Account>> newAccount(@RequestBody String name) {
-        List<Transaction> lst = new ArrayList<Transaction>();
+        List<Long> lst = new ArrayList<Long>();
         Account newAccount = new Account(name, 0D, lst);
-        // Long newId = Math.round(Math.random());
-        // Long newId = 0L;
-        // accountRepository.findAll().stream() 
-        //     .forEach(account -> {
-        //         if (account.getId() == newId)
-        //             newId += 1;
-
-                
-        //         // if (id == newId) {
-        //         //     newId = Math.round(Math.random());
-
-        //         // }
-        //     });
-        // newAccount.setId(newId);
 
         EntityModel<Account> entityModel = assembler.toModel(accountRepository.save(newAccount));
 
@@ -74,7 +60,7 @@ class AccountController {
                 return accountRepository.save(account);
             })
             .orElseGet(() -> {
-                List<Transaction> lst = new ArrayList<Transaction>();
+                List<Long> lst = new ArrayList<Long>();
                 Account newAccount = new Account(newName, 0D, lst);
                 newAccount.setId(id);
                 return accountRepository.save(newAccount);
@@ -88,7 +74,7 @@ class AccountController {
     }
 
     // Delete an existing account
-    @DeleteMapping("accounts/{id}")
+    @DeleteMapping("/accounts/{id}")
     ResponseEntity<?> deleteAccount(@PathVariable Long id) {
         accountRepository.deleteById(id);
 

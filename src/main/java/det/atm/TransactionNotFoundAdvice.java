@@ -12,7 +12,7 @@ class TransactionNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(TransactionNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(TransactionNotFoundException ex) {
+    String transactionNotFoundHandler(TransactionNotFoundException ex) {
         return ex.getMessage();
     }
 }

@@ -20,12 +20,12 @@ const AccountForm = ({createAccount}) => {
     // let navigate = useNavigate()
 
     async function handleFormSubmit(values) {
-        // db.collection('comments').add({
-        //     comment: values.anonComment,
-        // }).catch((error) => {
-        //     console.error('Error adding to firebase: ', error);
-        // });
-        console.log(values);
+        let id = values.accountId; 
+        console.log(id)
+
+        const response = await fetch(`/accounts/${id}`)
+        return await response.json();
+
         // navigate("/account");
 
     }

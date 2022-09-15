@@ -17,7 +17,7 @@ class TransactionModelAssembler implements RepresentationModelAssembler<Transact
 
         transactionModel.add(linkTo(methodOn(TransactionController.class).getTransaction(transaction.getNum(), id)).withSelfRel());
         // transactionModel.add(linkTo(methodOn(TransactionController.class).getAllTransactions()).withRel("transactions"));
-        transactionModel.add(linkTo(methodOn(TransactionController.class).getAccountTransactions(id)).withRel("accounts/{id}/transactions")); // is this correct? 
+        transactionModel.add(linkTo(methodOn(TransactionController.class).getAccountTransactions(id)).withRel("/accounts/{id}")); 
 
         return transactionModel;
     };
