@@ -3,11 +3,6 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import '../App.css';
-import AccountScreen from '../screens/AccountScreen';
-// import { useNavigate } from 'react-router-dom';
-// import { firebase } from '../firebase';
-
-// const db = firebase.firestore();
 
 const validationSchema = Yup.object().shape({
     accountId: Yup.number()
@@ -16,17 +11,16 @@ const validationSchema = Yup.object().shape({
         .required('Please enter an id number')
 });
 
-const AccountForm = ({createAccount}) => {
-    // let navigate = useNavigate()
+const AccountForm = ({createAccount, setAccount}) => {
 
     async function handleFormSubmit(values) {
         let id = values.accountId; 
         console.log(id)
 
-        const response = await fetch(`/accounts/${id}`)
-        return await response.json();
-
-        // navigate("/account");
+        // const response = await fetch(`/accounts/${id}`)
+        // let acc =  await response.json();
+        // setAccount(acc.getId())
+        setAccount(id)
 
     }
 

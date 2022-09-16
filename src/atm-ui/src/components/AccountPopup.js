@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Popup from 'reactjs-popup';
 import NewAccountForm from './NewAccountForm';
 import NewTransactionForm from './NewTransactionForm';
 
 
-const AccountPopup = ({createItem, setCreateItem, item}) => {
+const AccountPopup = ({createItem, setCreateItem, item, setAccount}) => {
     console.log(createItem)
 
     return (
@@ -24,9 +24,9 @@ const AccountPopup = ({createItem, setCreateItem, item}) => {
                     <div className="header"> 
                         Please enter your desired {item} information
                     </div>
-                    {item == "account" 
-                        ? <NewAccountForm />
-                        : item == "transaction" ? <NewTransactionForm />
+                    {item === "account" 
+                        ? <NewAccountForm setAccount={setAccount} />
+                        : item === "transaction" ? <NewTransactionForm close={close} />
                             : null
                     }
                     

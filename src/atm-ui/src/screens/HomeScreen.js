@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import AccountForm from '../components/AccountForm';
-import Popup from 'reactjs-popup';
-import NewAccountForm from '../components/NewAccountForm';
 import AccountPopup from '../components/AccountPopup';
 
 
-const HomeScreen = () => {
+const HomeScreen = ({account, setAccount}) => {
     const [createAccount, setCreateAccount] = useState(false);
 
     return (
@@ -20,10 +18,10 @@ const HomeScreen = () => {
                 Please create an account or enter your account ID to get started
             </p>
             <button className='button' onClick={() => setCreateAccount(true)}>Create account</button>
-            <AccountForm createAccount={createAccount} />
+            <AccountForm createAccount={createAccount} setAccount={setAccount} />
         </div>
         {createAccount 
-            ? <AccountPopup createItem={createAccount} setCreateItem={setCreateAccount} item="account" />
+            ? <AccountPopup createItem={createAccount} setCreateItem={setCreateAccount} item="account" setAccount={setAccount} />
             : null}
         </React.Fragment>
     )
