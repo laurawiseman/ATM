@@ -13,7 +13,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+// import java.util.List;
 // import java.util.stream.Collectors;
 
 // import javax.persistence.Entity;
@@ -54,9 +54,9 @@ class TransactionController {
         Account account = accountRepository.findById(id)
             .orElseThrow(() -> new AccountNotFoundException(id));
 
-        List<EntityModel<Transaction>> transactions = new ArrayList<EntityModel<Transaction>>();
+        ArrayList<EntityModel<Transaction>> transactions = new ArrayList<EntityModel<Transaction>>();
 
-        List<Long> trs = account.getTransactions();
+        ArrayList<Long> trs = account.getTransactions();
         Iterator<Long> iterator = trs.iterator();
         while(iterator.hasNext()) {
             Long num = iterator.next();

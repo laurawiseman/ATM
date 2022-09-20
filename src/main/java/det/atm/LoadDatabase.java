@@ -3,7 +3,7 @@ package det.atm;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
-import java.util.List;
+// import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +21,11 @@ class LoadDatabase {
         Transaction t2 = new Transaction(0L, Transaction.Type.DEPOSIT, 50D);
         Transaction t3 = new Transaction(1L, Transaction.Type.DEPOSIT, 200D);
 
-        List<Long> lst = new ArrayList<Long>();
+        ArrayList<Long> lst = new ArrayList<Long>();
         lst.add(t1.getNum());
         lst.add(t2.getNum());
 
-        List<Long> lst2 = new ArrayList<Long>();
+        ArrayList<Long> lst2 = new ArrayList<Long>();
         lst2.add(t3.getNum());
 
         return args -> {
