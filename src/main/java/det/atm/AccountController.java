@@ -1,5 +1,6 @@
 package det.atm;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 
 @RestController
@@ -23,6 +27,17 @@ class AccountController {
     AccountController(AccountRepository accountRepository, AccountModelAssembler assembler) {
         this.accountRepository = accountRepository;
         this.assembler = assembler;
+    }
+
+    // Get all accounts
+    @GetMapping("/accounts/")
+    CollectionModel<EntityModel<Account>> getAllAccounts() {
+        List<EntityModel<Account>> accounts = accountRepository.findAll().stream()
+            .map(assembler::toModel)
+            .collect(Collectors.toList());
+
+        return CollectionModel.of(accounts, 
+            linkTo(methodOn(AccountController.class).getAllAccounts()).withSelfRel());
     }
 
     // Get a particular users account 
@@ -37,24 +52,10 @@ class AccountController {
 
     // Create a brand new account, setting the initial balance to 0 with no initial transactions
     // Assigns an id to the new account
-    @PostMapping("accounts") 
+    @PostMapping("/accounts") 
     ResponseEntity<EntityModel<Account>> newAccount(@RequestBody String name) {
-        List<Transaction> lst = new ArrayList<Transaction>();
+        ArrayList<Long> lst = new ArrayList<Long>();
         Account newAccount = new Account(name, 0D, lst);
-        // Long newId = Math.round(Math.random());
-        // Long newId = 0L;
-        // accountRepository.findAll().stream() 
-        //     .forEach(account -> {
-        //         if (account.getId() == newId)
-        //             newId += 1;
-
-                
-        //         // if (id == newId) {
-        //         //     newId = Math.round(Math.random());
-
-        //         // }
-        //     });
-        // newAccount.setId(newId);
 
         EntityModel<Account> entityModel = assembler.toModel(accountRepository.save(newAccount));
 
@@ -74,7 +75,7 @@ class AccountController {
                 return accountRepository.save(account);
             })
             .orElseGet(() -> {
-                List<Transaction> lst = new ArrayList<Transaction>();
+                ArrayList<Long> lst = new ArrayList<Long>();
                 Account newAccount = new Account(newName, 0D, lst);
                 newAccount.setId(id);
                 return accountRepository.save(newAccount);
@@ -88,7 +89,7 @@ class AccountController {
     }
 
     // Delete an existing account
-    @DeleteMapping("accounts/{id}")
+    @DeleteMapping("/accounts/{id}")
     ResponseEntity<?> deleteAccount(@PathVariable Long id) {
         accountRepository.deleteById(id);
 

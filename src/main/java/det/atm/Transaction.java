@@ -26,6 +26,8 @@ class Transaction {
     //     this.amount = amount;
     // }
 
+    Transaction() {}
+
     Transaction(Long id, Type type, Double amount) {
         this.id = id;
         this.type = type;

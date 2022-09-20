@@ -3,7 +3,7 @@ package det.atm;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
-import java.util.List;
+// import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +21,12 @@ class LoadDatabase {
         Transaction t2 = new Transaction(0L, Transaction.Type.DEPOSIT, 50D);
         Transaction t3 = new Transaction(1L, Transaction.Type.DEPOSIT, 200D);
 
-        List<Transaction> lst = new ArrayList<Transaction>();
-        lst.add(t1);
-        lst.add(t2);
+        ArrayList<Long> lst = new ArrayList<Long>();
+        lst.add(t1.getNum());
+        lst.add(t2.getNum());
 
-        List<Transaction> lst2 = new ArrayList<Transaction>();
-        lst2.add(t3);
+        ArrayList<Long> lst2 = new ArrayList<Long>();
+        lst2.add(t3.getNum());
 
         return args -> {
             transactionRepository.save(t1);
@@ -36,7 +36,7 @@ class LoadDatabase {
             transactionRepository.findAll().forEach(transaction -> log.info("Preloaded transaction: " + transaction));
 
             accountRepository.save(new Account("Laura Wiseman", 150D, lst));
-            accountRepository.save(new Account("Nathan Villa", 200D, lst2));
+            accountRepository.save(new Account("Nathan Vella", 200D, lst2));
 
             accountRepository.findAll().forEach(account -> log.info("Preloaded account: " + account));
         };

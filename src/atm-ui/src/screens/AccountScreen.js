@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AccountPopup from '../components/AccountPopup';
 
-const AccountScreen = ({id}) => {
+const AccountScreen = ({id, setAccount}) => {
     console.log(id)
     const [createTransaction, setCreateTransaction] = useState(false)
 
@@ -14,6 +14,7 @@ const AccountScreen = ({id}) => {
 
     return (
         <React.Fragment>
+        <button className='button' onClick={() => setAccount('')}>Back to Home</button>
         <div className='container'>
             <div className='info'>
                 <h1> {name} </h1>   
@@ -37,7 +38,7 @@ const AccountScreen = ({id}) => {
             </div>
         </div>
         {createTransaction 
-            ? <AccountPopup createItem={createTransaction} setCreateItem={setCreateTransaction} item="transaction" />
+            ? <AccountPopup createItem={createTransaction} setCreateItem={setCreateTransaction} item="transaction" setAccount={setAccount} />
             : null}
         </React.Fragment>
     )

@@ -3,10 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import '../App.css';
-// import AccountScreen from '../screens/AccountScreen';
-// import { firebase } from '../firebase';
 
-// const db = firebase.firestore();
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -14,16 +11,15 @@ const validationSchema = Yup.object().shape({
         .required('Please enter a name for your account')
 });
 
-const NewAccountForm = () => {
+const NewAccountForm = ({setAccount}) => {
 
     async function handleFormSubmit(values) {
-        // db.collection('comments').add({
-        //     comment: values.anonComment,
-        // }).catch((error) => {
-        //     console.error('Error adding to firebase: ', error);
-        // });
-        // return <AccountScreen />
         console.log(values);
+
+        let id = 1
+
+        setAccount(id)
+        return
     }
 
     return (

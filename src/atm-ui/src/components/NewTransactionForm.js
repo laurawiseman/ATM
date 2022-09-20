@@ -3,10 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import '../App.css';
-// import AccountScreen from '../screens/AccountScreen';
-// import { firebase } from '../firebase';
 
-// const db = firebase.firestore();
 
 const validationSchema = Yup.object().shape({
     type: Yup.string()
@@ -14,20 +11,15 @@ const validationSchema = Yup.object().shape({
         .oneOf(["deposit", "withdrawal"], "Transaction type must be deposit or withdrawal"),
     amount: Yup.number()
         .min(1, 'Transaction amount must be a valid number')
-        // .integer('Transaction amount must be a valid number')
         .required('Please enter an amount number')
 });
 
-const NewTransactionForm = () => {
+const NewTransactionForm = ({close}) => {
 
     async function handleFormSubmit(values) {
-        // db.collection('comments').add({
-        //     comment: values.anonComment,
-        // }).catch((error) => {
-        //     console.error('Error adding to firebase: ', error);
-        // });
-        // return <AccountScreen />
+
         console.log(values);
+        close();
     }
 
     return (

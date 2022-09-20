@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -13,11 +13,11 @@ class Account {
     private @Id @GeneratedValue Long id;
     private String name;
     private Double balance;
-    private List<Transaction> transactions;
+    private ArrayList<Long> transactions; 
 
     Account() {} 
 
-    Account(String name, Double balance, List<Transaction> transactions) {
+    Account(String name, Double balance, ArrayList<Long> transactions) {
         this.name = name;
         this.balance = balance;
         this.transactions = transactions;
@@ -42,7 +42,7 @@ class Account {
         return "$" + String.format("%.2f", this.balance);
     }
 
-    public List<Transaction> getTransactions() {
+    public ArrayList<Long> getTransactions() {
         return this.transactions;
     }
 
@@ -52,6 +52,10 @@ class Account {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setFirstBalance() {
+        this.balance = 0D;
     }
 
     public void setBalance(Transaction.Type type, Double amount) {
@@ -67,7 +71,7 @@ class Account {
         }
     }
 
-    public void addTransaction(Transaction transaction) {
+    public void addTransaction(Long transaction) {
         this.transactions.add(transaction);
     }
     

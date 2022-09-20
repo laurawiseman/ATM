@@ -12,7 +12,7 @@ class TransactionTypeErrorAdvice {
     @ResponseBody
     @ExceptionHandler(TransactionTypeError.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(TransactionTypeError ex) {
+    String transactionTypeErrorHandler(TransactionTypeError ex) {
         return ex.getMessage();
     }
 }
