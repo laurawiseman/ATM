@@ -5,6 +5,7 @@ const AccountScreen = ({account, setAccount}) => {
     // console.log(account)
     const [createTransaction, setCreateTransaction] = useState(false)
     const [transactionsList, setTransactionsList] = useState([])
+    const [newTransaction, setNewTransaction] = useState(false)
 
     // Get account with id # from java backend
     // Show account id, name, balance, list of transactions, and have a button to create transaction 
@@ -41,17 +42,18 @@ const AccountScreen = ({account, setAccount}) => {
 
     useEffect(() => {
         getTransactions().then(response => {
-            console.log('tr response: ', response);
             let lst = response._embedded.transactionList
+            console.log("full tr list: ", lst)
 
-            setTransactionsList(lst);
+            setTransactionsList(lst.filter(transaction => transaction.id === account.id));
+            setNewTransaction(false);
             // lst.map(transaction => {
             //     console.log("transaction is: ", transaction)
             //     setTransactionsList(...transactionsList, transaction)
             // })
         }).catch(err => console.log(err))
         // console.log("after setting but before rerender: ", transactionsList)
-        }, [account])
+        }, [account, newTransaction])
 
 
     return (
@@ -70,7 +72,7 @@ const AccountScreen = ({account, setAccount}) => {
                     <h3> Transactions </h3>
                     {transactionsList ? transactionsList.map((transaction, index) => 
                         <div className='t'>
-                            <p>{index}</p>
+                            <p>{index + 1}</p>
                             <p>{transaction.type}</p>
                             <p>{transaction.amount}</p>
                         </div>
@@ -80,7 +82,7 @@ const AccountScreen = ({account, setAccount}) => {
             </div>
         </div>
         {createTransaction 
-            ? <AccountPopup createItem={createTransaction} setCreateItem={setCreateTransaction} item="transaction" setAccount={setAccount} />
+            ? <AccountPopup createItem={createTransaction} setCreateItem={setCreateTransaction} item="transaction" account={account} setAccount={setAccount} setNewTransaction={setNewTransaction} />
             : null}
         </React.Fragment>
     )

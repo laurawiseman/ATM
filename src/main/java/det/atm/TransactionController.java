@@ -2,9 +2,13 @@ package det.atm;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
+
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.hateoas.CollectionModel;
@@ -12,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+// import java.util.ArrayList;
+// import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,11 +100,33 @@ class TransactionController {
 
 
     // Add a new transaction and update the corresponding account balance and transactions list
-    @PutMapping("/transactions")
-    ResponseEntity<EntityModel<Transaction>> newTransaction(@RequestBody Transaction transaction, Long id) {
+    @PostMapping("/transactions")
+    ResponseEntity<EntityModel<Transaction>> newTransaction(@RequestBody String t) {
+        Object o1 = JSONValue.parse(t);
+        JSONObject jsonObj = (JSONObject) o1;
+        String type = (String) jsonObj.get("type");
+        Integer a = (Integer) jsonObj.get("amount");
+        Double amount = Double.valueOf(a);
+        Integer i = (Integer) jsonObj.get("id");
+        Long id = Long.valueOf(i);
+        Transaction.Type tt;
+        switch(type) {
+            case "deposit": 
+                tt = Transaction.Type.DEPOSIT;
+                break;
+            case "withdrawal":
+                tt = Transaction.Type.WITHDRAWAL;
+                break;
+            default:
+                throw new TransactionTypeError();
+        }
+
+        Transaction transaction = new Transaction(id, tt, amount);
+
         if (!(transaction.getType() instanceof Transaction.Type)) 
             throw new TransactionTypeError();
 
+        // Long id = transaction.getId();
         Account account = accountRepository.findById(id)
             .orElseThrow(() -> new AccountNotFoundException(id));
 

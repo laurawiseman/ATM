@@ -14,12 +14,34 @@ const validationSchema = Yup.object().shape({
         .required('Please enter an amount number')
 });
 
-const NewTransactionForm = ({close}) => {
+async function createTransaction(values) {
+    const response = await fetch(`/api/transactions`, {
+        method: 'POST', 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(values)
+    })
+    return await response.json(); 
+}
+
+const NewTransactionForm = ({close, account, setCreateTransaction, setNewTransaction}) => {
 
     async function handleFormSubmit(values) {
+        values.id = account.id;
 
-        console.log(values);
-        close();
+        console.log('new transaction values: ', values);
+        // console.log('account balance: ', Number(account.balance.substring(1)));
+
+        createTransaction(values).then(response => {
+            console.log('response: ', response);
+            setCreateTransaction(false);
+            setNewTransaction(true);
+
+            let num = Number(account.balance.substring(1));
+            values.type === "deposit" ? num += values.amount : num -= values.amount 
+            account.balance = "$" + num;
+            console.log('account: ', account)
+            close();
+        })
     }
 
     return (

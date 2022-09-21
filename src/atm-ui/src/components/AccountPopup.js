@@ -4,7 +4,7 @@ import NewAccountForm from './NewAccountForm';
 import NewTransactionForm from './NewTransactionForm';
 
 
-const AccountPopup = ({createItem, setCreateItem, item, setAccount}) => {
+const AccountPopup = ({createItem, setCreateItem, item, account, setAccount, setNewTransaction}) => {
     console.log(createItem)
 
     return (
@@ -26,7 +26,7 @@ const AccountPopup = ({createItem, setCreateItem, item, setAccount}) => {
                     </div>
                     {item === "account" 
                         ? <NewAccountForm setAccount={setAccount} />
-                        : item === "transaction" ? <NewTransactionForm close={close} />
+                        : item === "transaction" ? <NewTransactionForm close={close} account={account} setCreateTransaction={setCreateItem} setNewTransaction={setNewTransaction} />
                             : null
                     }
                     
