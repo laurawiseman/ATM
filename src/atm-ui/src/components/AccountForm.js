@@ -11,16 +11,29 @@ const validationSchema = Yup.object().shape({
         .required('Please enter an id number')
 });
 
+async function getAccount(id) {
+    const response = await fetch(`/api/accounts/${id}`)
+    console.log(response)
+    return await response.json(); 
+}
+
 const AccountForm = ({createAccount, setAccount}) => {
 
     async function handleFormSubmit(values) {
         let id = values.accountId; 
         console.log(id)
 
+        getAccount(id).then(response => {
+            console.log("r: ", response);
+            setAccount(response)
+        })
+
         // const response = await fetch(`/accounts/${id}`)
+        // console.log(response)
         // let acc =  await response.json();
+        // console.log("account: ", acc);
         // setAccount(acc.getId())
-        setAccount(id)
+        // setAccount(id)
 
     }
 

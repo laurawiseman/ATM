@@ -11,7 +11,7 @@ function App() {
     <React.Fragment>
       {
       account 
-        ? <AccountScreen id={account} setAccount={setAccount} />
+        ? <AccountScreen account={account} setAccount={setAccount} />
         : <HomeScreen account={account} setAccount={setAccount} />
       }
     </React.Fragment>
