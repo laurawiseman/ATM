@@ -17,17 +17,14 @@ async function createAccount(values) {
         headers: {'Content-Type': 'application/json'},
         body: values.name
     })
-    console.log('account created response: ', response)
     return await response.json(); 
 }
 
 const NewAccountForm = ({setAccount}) => {
 
     async function handleFormSubmit(values) {
-        console.log('new account values: ', values);
 
         createAccount(values).then(response => {
-            console.log('response: ', response);
             setAccount(response)
         })
     }

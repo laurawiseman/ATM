@@ -2,60 +2,26 @@ import React, { useEffect, useState } from 'react';
 import AccountPopup from '../components/AccountPopup';
 
 const AccountScreen = ({account, setAccount}) => {
-    // console.log(account)
     const [createTransaction, setCreateTransaction] = useState(false)
     const [transactionsList, setTransactionsList] = useState([])
     const [newTransaction, setNewTransaction] = useState(false)
 
-    // Get account with id # from java backend
-    // Show account id, name, balance, list of transactions, and have a button to create transaction 
-
-    // async function getTransaction(num) {
-    //     const response = await fetch(`/api/transactions/${num}`)
-    //     console.log("transaction: ", response)
-    //     return await response.json(); 
-    // }
-
     async function getTransactions() {
         const response = await fetch(`/api/transactions`)
-        console.log("transactions: ", response)
         return await response.json(); 
     }
-
-    // async function getTransactionsList(transactions) {
-    //     transactions.map((num, index) => {
-    //         getTransaction(num).then(response => {
-    //             console.log(response)
-    //             setTransactionsList(...transactionsList, response);
-    //         })
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     account.transactions.map((num, index) => {
-    //         getTransaction(num).then(response => {
-    //             console.log(response)
-    //             setTransactionsList(...transactionsList, response);
-    //         })
-    //     })
-    // }, [account])
 
     useEffect(() => {
         getTransactions().then(response => {
             let lst = response._embedded.transactionList
-            console.log("full tr list: ", lst)
 
             setTransactionsList(lst.filter(transaction => transaction.id === account.id));
             setNewTransaction(false);
-            // lst.map(transaction => {
-            //     console.log("transaction is: ", transaction)
-            //     setTransactionsList(...transactionsList, transaction)
-            // })
         }).catch(err => console.log(err))
-        // console.log("after setting but before rerender: ", transactionsList)
         }, [account, newTransaction])
 
-
+    // Get account with id # from java backend
+    // Show account id, name, balance, list of transactions, and have a button to create transaction 
     return (
         <React.Fragment>
         <button className='button' onClick={() => setAccount('')}>Back to Home</button>

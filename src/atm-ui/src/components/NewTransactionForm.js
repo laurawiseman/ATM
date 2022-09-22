@@ -28,18 +28,14 @@ const NewTransactionForm = ({close, account, setCreateTransaction, setNewTransac
     async function handleFormSubmit(values) {
         values.id = account.id;
 
-        console.log('new transaction values: ', values);
-        // console.log('account balance: ', Number(account.balance.substring(1)));
 
         createTransaction(values).then(response => {
-            console.log('response: ', response);
             setCreateTransaction(false);
             setNewTransaction(true);
 
             let num = Number(account.balance.substring(1));
             values.type === "deposit" ? num += values.amount : num -= values.amount 
             account.balance = "$" + num;
-            console.log('account: ', account)
             close();
         })
     }

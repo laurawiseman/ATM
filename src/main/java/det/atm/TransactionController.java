@@ -77,10 +77,6 @@ class TransactionController {
             
     //     }
         
-    //     // List<EntityModel<Transaction>> transactions = account.getTransactions().stream()
-    //     //     .map(transactionAssembler::toModel)
-    //     //     .collect(Collectors.toList());
-        
     //     return CollectionModel.of(transactions, 
     //         linkTo(methodOn(TransactionController.class).getAccountTransactions(id)).withSelfRel());
     // }
@@ -126,7 +122,6 @@ class TransactionController {
         if (!(transaction.getType() instanceof Transaction.Type)) 
             throw new TransactionTypeError();
 
-        // Long id = transaction.getId();
         Account account = accountRepository.findById(id)
             .orElseThrow(() -> new AccountNotFoundException(id));
 

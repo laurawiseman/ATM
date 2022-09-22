@@ -5,7 +5,6 @@ import NewTransactionForm from './NewTransactionForm';
 
 
 const AccountPopup = ({createItem, setCreateItem, item, account, setAccount, setNewTransaction}) => {
-    console.log(createItem)
 
     return (
         <Popup 
